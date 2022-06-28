@@ -1,20 +1,35 @@
+html,
+body{
+  height: 100%;
+  width: 100%;
+}
+
+.match{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  height: 100%;
+}
+
 .game{
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   height: 100%;
+  padding: 24px;
+  gap: 16px;
 }
 
 .board{
   display: grid;
-  width: 150px;
-  height: 150px;
+  width: 300px;
+  height: 300px;
   background-color: gray;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 8px;
-  align-items: center;
-  justify-items: center;
 }
 
 .board .cell{
@@ -22,5 +37,22 @@
   height: 100%;
   background-color: white;
   font-size: 32px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell img{
+  width: 80px;
+  height: 80px;
+}
+
+.result{
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.player{
+  display: flex;
+  align-items: center;
 }

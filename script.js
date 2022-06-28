@@ -20,6 +20,8 @@ const gameBoard = (function(){
       if(_checkWin(i,j)){
         let result = (letter == 'X') ? 'win' : 'lose';
         displayController.endGame(result);
+      }else if (_checkFull()){
+        displayController.endGame('tie');
       }
       _swapSymbol();
     }
@@ -32,7 +34,7 @@ const gameBoard = (function(){
       }
     }
     _currentSymbol = 'X';
-    displayController.displayBoard();
+    displayController.displayBoard(); 
   }
 
   const tryMove = (i , j) => {
@@ -100,6 +102,15 @@ const gameBoard = (function(){
     return true;
   }
 
+  const _checkFull = () => {
+    for(let i = 0; i < 3; i++){
+      for(let j = 0; j < 3; j++){
+        if (board[i][j] == undefined) return false;
+      }
+    }
+    return true;
+  }
+
   return{
     clear,
     tryMove,
@@ -110,13 +121,18 @@ const gameBoard = (function(){
 
 const displayController = (function() {
   const resultText = document.querySelector('.result');
+  let canPlay = true;
 
   const _createDisplay = () => {
     for(let i = 0; i < 9; i++){
       const cell = document.createElement('div');
       cell.setAttribute('id', i);
       cell.classList.add('cell');
-      cell.addEventListener('click', () => _move(i));
+      cell.addEventListener('click', () => {
+      if(canPlay){
+        _move(i)
+      }
+    });
 
       board.appendChild(cell);
     }
@@ -129,15 +145,22 @@ const displayController = (function() {
 
   const _updateCell = (symbol,i) => {
     const cell = document.getElementById(i);
-    cell.innerHTML = symbol ? symbol : ' ';
-  }
-
-  const _twoToOne = (i,j) => {
-    return 3*i + j;
+    if(symbol == 'X'){
+      cell.innerHTML = "<img src = 'images/X.svg'>";
+    }else if (symbol == 'O'){
+      cell.innerHTML = "<img src = 'images/O.svg'>";
+    }else{
+      cell.innerHTML = '';
+    }
+    
   }
 
   const _oneToTwo = (k) =>{
     return [Math.floor(k/3), k%3];
+  }
+
+  const _twoToOne = (i,j) => {
+    return 3*i + j;
   }
 
   const displayBoard = () => {
@@ -151,7 +174,7 @@ const displayController = (function() {
   const initialize = () => {
     _createDisplay();
     displayBoard();
-
+    
     const clear = document.createElement('button');
     clear.setAttribute('id', 'clear');
     clear.textContent = 'Restart Game'
@@ -166,17 +189,20 @@ const displayController = (function() {
 
   const _restart = () => {
     gameBoard.clear();
+    canPlay = true;
     resultText.textContent = '';
   }
   const endGame = (result) =>{
-    
+    canPlay = false;
     let text;
     switch(result){
       case 'win':
         text = 'Player 1 Wins!';
+        player1.addScore();
       break;
       case 'lose':
         text = 'Player 2 Wins!';
+        player2.addScore();
       break;
       case 'tie':
         text = 'Tie!';
@@ -196,3 +222,25 @@ const displayController = (function() {
 
 
 displayController.initialize();
+
+
+const Player = function(symbol, dom){
+  let score = 0;
+  const scoreDom = dom.querySelector('.score');
+
+  const reset = () => {
+    score = 0;
+  }
+
+
+  const addScore = () => {
+    score++;
+    scoreDom.textContent = `Score: ${score}`;
+  }
+
+  return{addScore, symbol}
+
+}
+
+const player1 = new Player('X', document.getElementById('player1'));
+const player2 = new Player('O', document.getElementById('player2'));
