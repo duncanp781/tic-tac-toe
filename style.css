@@ -55,4 +55,11 @@ body{
 .player{
   display: flex;
   align-items: center;
+  flex-direction: column
 }
+
+.player .name{
+  display: flex;
+  align-items: center;
+}
+

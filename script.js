@@ -197,11 +197,11 @@ const displayController = (function() {
     let text;
     switch(result){
       case 'win':
-        text = 'Player 1 Wins!';
+        text = `${player1.name} Wins!`;
         player1.addScore();
       break;
       case 'lose':
-        text = 'Player 2 Wins!';
+        text = `${player2.name} Wins!`;
         player2.addScore();
       break;
       case 'tie':
@@ -243,4 +243,27 @@ const Player = function(symbol, dom){
 }
 
 const player1 = new Player('X', document.getElementById('player1'));
+player1.name = 'Player 1';
 const player2 = new Player('O', document.getElementById('player2'));
+player2.name = 'Player 2';
+
+
+const p1Input = document.getElementById('p1form');
+const p2Input = document.getElementById('p2form');
+
+const p1name = document.getElementById('p1');
+const p2name = document.getElementById('p2');
+
+p1Input.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = e.target.querySelector('[name = "enter-name"]');
+  p1name.textContent = input.value;
+  player1.name = input.value;
+})
+
+p2Input.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = e.target.querySelector('[name = "enter-name"]');
+  p2name.textContent = input.value;
+  player2.name = input.value;
+})

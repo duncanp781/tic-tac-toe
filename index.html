@@ -10,9 +10,17 @@
 </head>
 <body>
   <div class="match">
+    
     <div class="player" id = 'player1'>
-      <span>Player 1: </span>
-      <img src = 'images/X.svg'>
+      <form class="input" id = 'p1form'>
+        <label for="player1name">Enter your name:</label>
+        <input type="text" name="enter-name" id="player1name">
+        <button type="submit">Enter</button>
+      </form>
+      <div class="name">
+        <span id = 'p1'>Player 1: </span>
+        <img src = 'images/X.svg'>
+      </div>
       <span class = 'score'>Score: 0</span> 
     </div>
     <div class="game">
@@ -21,8 +29,15 @@
       <span class = "result"></span>
     </div>
     <div class="player" id = 'player2'>
-      <span>Player 2:</span>
-      <img src = 'images/O.svg'>
+      <form class="input" id = 'p2form'>
+        <label for="player2name">Enter your name:</label>
+        <input type="text" name="enter-name" id="player2name">
+        <button type="submit">Enter</button>
+      </form>
+      <div class="name">
+        <span id = 'p2'>Player 2:</span>
+        <img src = 'images/O.svg'>
+      </div>
       <span class = 'score'>Score: 0</span>
     </div>
   </div>
